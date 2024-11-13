@@ -8,15 +8,26 @@
 </head>
 <body>
     <div class="container">
-        <h1>Simulateur de FPS</h1>
-        <div class="slider-container">
-            <input type="range" id="fpsSlider" min="0" max="2000" value="0">
-            <span id="fpsValue">0 FPS</span>
+        <div class="game-container">
+            <canvas id="gameCanvas" width="300" height="300"></canvas>
         </div>
-        <div id="fpsDisplay" class="fps-display">FPS: 0</div>
-        <button id="startBtn">Démarrer le Test</button>
-        <button id="maxCpuBtn">Maximiser la Charge CPU</button>
-        <p id="warningText" style="color: red; font-size: 14px; display: none;">Attention : Cette opération peut chauffer votre appareil.</p>
+
+        <div class="fps-simulation">
+            <h1>Simulateur de FPS</h1>
+            <div class="slider-container">
+                <input type="range" id="fpsSlider" min="0" max="2000" value="0">
+                <span id="fpsValue">0 FPS</span>
+            </div>
+            <div id="fpsDisplay" class="fps-display">FPS: 0</div>
+            <button id="startBtn">Démarrer le Test</button>
+            <button id="maxCpuBtn">Maximiser la Charge CPU</button>
+            <p id="warningText" style="color: red; font-size: 14px; display: none;">Attention : Cette opération peut chauffer votre appareil.</p>
+        </div>
+    </div>
+
+    <!-- Icône de mode sombre/clair -->
+    <div id="themeToggle" class="theme-toggle">
+        <span id="themeIcon" class="sun">&#9733;</span> <!-- Soleil en mode clair -->
     </div>
 
     <script src="script.js"></script>
