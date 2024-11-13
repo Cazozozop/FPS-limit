@@ -29,11 +29,29 @@ body {
 }
 
 /* Titre */
-.main-title {
+h1 {
     text-align: center;
     margin-top: 50px;
     font-size: 2rem;
     color: inherit;
+}
+
+/* Bouton pour lancer le test */
+#run-btn {
+    display: block;
+    margin: 50px auto;
+    padding: 10px 20px;
+    background-color: #ff6600;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+#run-btn:hover {
+    background-color: #ff9933;
 }
 
 /* Section du slider */
