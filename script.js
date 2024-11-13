@@ -18,7 +18,7 @@ function toggleMode() {
     if (isDarkMode) {
         document.body.classList.remove("dark-mode");
         document.body.classList.add("light-mode");
-        modeToggle.innerHTML = "☀️";
+        modeToggle.innerHTML = "🌞";
     } else {
         document.body.classList.remove("light-mode");
         document.body.classList.add("dark-mode");
