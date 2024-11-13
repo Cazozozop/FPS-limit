@@ -1,15 +1,16 @@
-/* Définir les styles de base */
+/* Styles de base */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
 }
 
 body {
     background-color: #f7f7f7;
     color: #333;
     transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: 'Arial', sans-serif;
 }
 
 body.dark-mode {
@@ -47,20 +48,9 @@ body.dark-mode h1 {
 
 .sun, .moon {
     display: inline-block;
-    width: 24px;
-    height: 24px;
-    background-color: yellow;
-    border-radius: 50%;
-    position: relative;
+    font-size: 30px;
+    cursor: pointer;
     transition: background-color 0.3s ease;
-}
-
-body.dark-mode .sun {
-    background-color: #f7f7f7;
-}
-
-body.dark-mode .moon {
-    background-color: #aaa;
 }
 
 .fps-controls {
