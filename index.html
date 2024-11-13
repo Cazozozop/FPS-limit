@@ -6,32 +6,26 @@
     <title>Simulateur FPS</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="container">
-        <header>
-            <div class="theme-toggle" id="themeToggle">
-                <span id="themeIcon" class="sun">☀️</span>
-            </div>
-            <h1>Simulateur de FPS</h1>
-        </header>
+<body class="light-mode">
+    <div class="mode-toggle" onclick="toggleMode()">☀️</div>
+    <h1 class="main-title">Simulateur FPS</h1>
 
-        <main>
-            <div class="fps-controls">
-                <label for="fpsSlider">FPS :</label>
-                <input type="range" id="fpsSlider" min="0" max="2000" value="0" class="slider">
-                <p id="fpsValue">0 FPS</p>
-            </div>
-            <div class="buttons">
-                <button id="startBtn">Démarrer Test</button>
-                <button id="maxCpuBtn">Maximiser Charge CPU</button>
-            </div>
-            <p id="warningText" style="display:none; color: red;">Attention : Ce test charge fortement votre CPU !</p>
-            
-            <div class="game-container">
-                <canvas id="gameCanvas" width="400" height="400"></canvas>
-            </div>
-        </main>
+    <!-- Section FPS Slider -->
+    <div class="fps-container">
+        <label for="fps-slider">Réglez les FPS</label>
+        <input id="fps-slider" class="slider" type="range" min="0" max="2000" value="0" step="1">
+        <p>FPS: <span id="fps-value">0</span></p>
     </div>
+
+    <!-- Game Area -->
+    <div class="game-area">
+        <div class="game-container" id="game-container">
+            <div class="game-cube" id="game-cube"></div>
+        </div>
+    </div>
+
+    <!-- Étincelles et effets visuels -->
+    <div id="sparks-container"></div>
 
     <script src="script.js"></script>
 </body>
