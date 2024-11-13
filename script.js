@@ -74,6 +74,11 @@ function createSparks() {
 // Générer des étincelles régulièrement
 setInterval(createSparks, 100);
 
-// Initialiser les FPS
-fpsSlider.value = 0;
-fpsValue.textContent = fpsSlider.value;
+// Fonction pour démarrer le test
+function startTest() {
+    fpsSlider.value = 0;
+    fpsValue.textContent = "0";
+    clearInterval(fpsInterval);
+    gameCube.style.left = "50%";
+    gameCube.style.top = "50%";
+}
