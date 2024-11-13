@@ -53,9 +53,20 @@ function maxCpuLoad() {
             frameCount = 0;
         }
 
-        // Charge CPU maximale
-        for (let i = 0; i < 10000000; i++) {
-            Math.sqrt(Math.random()); // Faire un calcul simple mais lourd
+        // Charge CPU maximale avec des calculs lourds (calcule des nombres premiers)
+        let i = 2;
+        while (i < 10000000) {
+            let prime = true;
+            for (let j = 2; j < Math.sqrt(i); j++) {
+                if (i % j === 0) {
+                    prime = false;
+                    break;
+                }
+            }
+            if (prime) {
+                // Vous pouvez également afficher les nombres premiers pour plus d'interactivité
+            }
+            i++;
         }
 
         frameCount++;
@@ -82,8 +93,16 @@ function controlledCpuLoad() {
 
         // Charge CPU contrôlée par le slider
         if (loadMultiplier > 0) {
-            for (let i = 0; i < loadMultiplier * 10000; i++) {
-                Math.sqrt(Math.random()); // Faire un calcul simple mais lourd
+            let i = 2;
+            while (i < 1000000 * (loadMultiplier / 100)) {
+                let prime = true;
+                for (let j = 2; j < Math.sqrt(i); j++) {
+                    if (i % j === 0) {
+                        prime = false;
+                        break;
+                    }
+                }
+                i++;
             }
         }
 
@@ -107,28 +126,4 @@ startBtn.addEventListener('click', () => {
 // Maximiser la charge CPU quand le bouton est cliqué
 maxCpuBtn.addEventListener('click', () => {
     if (!cpuMaximized) {
-        warningText.style.display = 'block'; // Avertir l'utilisateur
-        cpuMaximized = true;
-        maxCpuLoad(); // Lancer la charge CPU maximale
-    }
-});
-
-// Mise à jour de la valeur FPS du slider
-fpsSlider.addEventListener('input', () => {
-    loadMultiplier = fpsSlider.value;
-    fpsValueDisplay.textContent = `${loadMultiplier} FPS`;
-});
-
-// Toggle du mode sombre/clair
-themeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-
-    // Change l'icône selon le mode
-    if (document.body.classList.contains('dark-mode')) {
-        themeIcon.classList.remove('sun');
-        themeIcon.classList.add('moon');
-    } else {
-        themeIcon.classList.remove('moon');
-        themeIcon.classList.add('sun');
-    }
-});
+        warningText.style.display = 'block'; // A
