@@ -47,7 +47,7 @@ function maxCpuLoad() {
         let elapsed = now - startTime;
 
         if (elapsed > 1000) {
-            fpsDisplay.textContent = `FPS: ${frameCount}`;
+            fpsValueDisplay.textContent = `FPS: ${frameCount}`;
             startTime = now;
             frameCount = 0;
         }
@@ -82,7 +82,7 @@ function controlledCpuLoad() {
         let elapsed = now - startTime;
 
         if (elapsed > 1000) {
-            fpsDisplay.textContent = `FPS: ${frameCount}`;
+            fpsValueDisplay.textContent = `FPS: ${frameCount}`;
             startTime = now;
             frameCount = 0;
         }
