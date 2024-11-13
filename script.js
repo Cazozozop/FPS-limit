@@ -9,10 +9,34 @@ let isTestRunning = false;
 let loadMultiplier = 0;
 let cpuMaximized = false;
 
-fpsSlider.addEventListener('input', () => {
-    loadMultiplier = fpsSlider.value;
-    fpsValueDisplay.textContent = `${loadMultiplier} FPS`;
-});
+let themeToggle = document.getElementById('themeToggle');
+let themeIcon = document.getElementById('themeIcon');
+
+// Canevas et jeu
+let canvas = document.getElementById('gameCanvas');
+let ctx = canvas.getContext('2d');
+let squareSize = 30;
+let squareX = Math.random() * (canvas.width - squareSize);
+let squareY = Math.random() * (canvas.height - squareSize);
+let squareSpeedX = Math.random() * 2 - 1; // Vitesse aléatoire
+let squareSpeedY = Math.random() * 2 - 1; // Vitesse aléatoire
+
+// Mise à jour de l'animation du jeu
+function updateGame() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Effacer l'ancien dessin
+    ctx.fillStyle = "#007bff"; // Couleur du carré
+    ctx.fillRect(squareX, squareY, squareSize, squareSize);
+
+    // Déplacer le carré
+    squareX += squareSpeedX * (loadMultiplier / 100); // Multiplicateur basé sur FPS
+    squareY += squareSpeedY * (loadMultiplier / 100);
+
+    // Vérifier si le carré touche les bords
+    if (squareX <= 0 || squareX + squareSize >= canvas.width) squareSpeedX *= -1;
+    if (squareY <= 0 || squareY + squareSize >= canvas.height) squareSpeedY *= -1;
+
+    requestAnimationFrame(updateGame); // Demander une nouvelle animation
+}
 
 // Fonction pour générer une charge CPU maximale
 function maxCpuLoad() {
@@ -76,6 +100,7 @@ startBtn.addEventListener('click', () => {
         warningText.style.display = 'block'; // Avertir l'utilisateur
         isTestRunning = true;
         controlledCpuLoad(); // Lancer la simulation de charge contrôlée
+        updateGame(); // Démarrer l'animation du jeu
     }
 });
 
@@ -85,5 +110,25 @@ maxCpuBtn.addEventListener('click', () => {
         warningText.style.display = 'block'; // Avertir l'utilisateur
         cpuMaximized = true;
         maxCpuLoad(); // Lancer la charge CPU maximale
+    }
+});
+
+// Mise à jour de la valeur FPS du slider
+fpsSlider.addEventListener('input', () => {
+    loadMultiplier = fpsSlider.value;
+    fpsValueDisplay.textContent = `${loadMultiplier} FPS`;
+});
+
+// Toggle du mode sombre/clair
+themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+
+    // Change l'icône selon le mode
+    if (document.body.classList.contains('dark-mode')) {
+        themeIcon.classList.remove('sun');
+        themeIcon.classList.add('moon');
+    } else {
+        themeIcon.classList.remove('moon');
+        themeIcon.classList.add('sun');
     }
 });
