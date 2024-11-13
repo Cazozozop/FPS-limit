@@ -1,6 +1,5 @@
 let fpsSlider = document.getElementById('fpsSlider');
 let fpsValueDisplay = document.getElementById('fpsValue');
-let fpsDisplay = document.getElementById('fpsDisplay');
 let startBtn = document.getElementById('startBtn');
 let maxCpuBtn = document.getElementById('maxCpuBtn');
 let warningText = document.getElementById('warningText');
@@ -63,9 +62,6 @@ function maxCpuLoad() {
                     break;
                 }
             }
-            if (prime) {
-                // Vous pouvez également afficher les nombres premiers pour plus d'interactivité
-            }
             i++;
         }
 
@@ -116,14 +112,34 @@ function controlledCpuLoad() {
 // Démarrer le test avec la charge CPU contrôlée
 startBtn.addEventListener('click', () => {
     if (!isTestRunning) {
-        warningText.style.display = 'block'; // Avertir l'utilisateur
+        warningText.style.display = 'block';
+        loadMultiplier = fpsSlider.value;
         isTestRunning = true;
-        controlledCpuLoad(); // Lancer la simulation de charge contrôlée
-        updateGame(); // Démarrer l'animation du jeu
+        controlledCpuLoad();
     }
 });
 
-// Maximiser la charge CPU quand le bouton est cliqué
+// Maximiser la charge CPU
 maxCpuBtn.addEventListener('click', () => {
     if (!cpuMaximized) {
-        warningText.style.display = 'block'; // A
+        warningText.style.display = 'block';
+        loadMultiplier = 100;
+        cpuMaximized = true;
+        maxCpuLoad();
+    }
+});
+
+// Mise à jour de la valeur du FPS
+fpsSlider.addEventListener('input', () => {
+    fpsValueDisplay.textContent = `${fpsSlider.value} FPS`;
+    loadMultiplier = fpsSlider.value;
+});
+
+// Fonction de changement de thème
+themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    themeIcon.classList.toggle('sun');
+    themeIcon.classList.toggle('moon');
+});
+
+updateGame();
