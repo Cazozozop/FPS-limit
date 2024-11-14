@@ -6,7 +6,7 @@
   <title>Simulation de Lag Extrême</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body, html { font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; overflow: hidden; }
+    body, html { font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; overflow: hidden; background: #1e1e2f; }
     .animated-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(120deg, #1e1e2f, #ff0040, #0000ff, #1e1e2f); background-size: 300% 300%; animation: bgAnimation 15s ease infinite; z-index: -1; }
     @keyframes bgAnimation { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
     h1 { margin-bottom: 20px; font-size: 2.5em; color: #ffcc00; text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.7); animation: pulse 2s infinite alternate; }
@@ -28,7 +28,7 @@
   <div class="animated-bg"></div>
   <h1>Simulation de Lag Extrême</h1>
   <div class="slider-container">
-    <input type="range" min="1" max="200" value="20" class="slider" id="lag-slider">
+    <input type="range" min="1" max="100" value="20" class="slider" id="lag-slider">
     <p>Force du Lag : <span id="slider-value">20</span>%</p>
   </div>
   <div class="fps-counter">FPS Actuel : <span id="fps-counter">0</span></div>
@@ -46,7 +46,7 @@
     lagSlider.addEventListener("input", () => {
       lagIntensity = parseInt(lagSlider.value);
       sliderValue.textContent = lagIntensity;
-      if (lagIntensity > 100) {
+      if (lagIntensity > 60) {
         sliderValue.classList.add("red-text");
       } else {
         sliderValue.classList.remove("red-text");
@@ -65,9 +65,9 @@
     function multipleCalculations() {
       let result = 0;
       // Augmenter la complexité en fonction de la barre
-      for (let i = 0; i < lagIntensity * 3; i++) {
-        for (let j = 0; j < lagIntensity * 3; j++) {
-          for (let k = 0; k < lagIntensity * 3; k++) {
+      for (let i = 0; i < lagIntensity * 2; i++) {
+        for (let j = 0; j < lagIntensity * 2; j++) {
+          for (let k = 0; k < lagIntensity * 2; k++) {
             result += complexCalculation(i * 0.01, j * 0.01, k * 0.01);
           }
         }
