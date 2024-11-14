@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulation de Lag Bloxd.io avec Limitation d'FPS</title>
+  <title>Simulation de Lag - Force de Lag Réglable</title>
   <style>
-    /* Styles généraux */
     body, html {
       margin: 0;
       padding: 0;
@@ -29,10 +28,16 @@
       width: 100%;
     }
 
-    /* Compteur d'FPS */
+    /* Compteur d'FPS et de lag */
     .fps-counter {
       font-size: 1.5em;
       margin-top: 10px;
+    }
+
+    /* Niveaux de lag */
+    .lag-levels {
+      margin-top: 20px;
+      font-size: 1em;
     }
 
     /* Bouton pour afficher le max FPS */
@@ -48,62 +53,71 @@
 </head>
 <body>
 
-  <h1>Simulation de Lag Bloxd.io</h1>
+  <h1>Simulation de Lag - Force Réglable</h1>
 
-  <!-- Conteneur de la slidebar -->
+  <!-- Conteneur de la slidebar pour la force de lag -->
   <div class="slider-container">
-    <input type="range" min="10" max="60" value="30" class="slider" id="fps-slider">
-    <p>FPS Maximum souhaité : <span id="slider-value">30</span></p>
+    <input type="range" min="1" max="100" value="20" class="slider" id="lag-slider">
+    <p>Force du Lag : <span id="slider-value">20</span>%</p>
   </div>
 
   <!-- Compteur d'FPS -->
   <div class="fps-counter">FPS Actuel : <span id="fps-counter">0</span></div>
 
+  <!-- Indicateur de niveaux de lag -->
+  <div class="lag-levels">
+    <p>Niveaux de Lag Comparatifs :</p>
+    <ul>
+      <li>Bloxd.io : 10%</li>
+      <li>Minecraft : 30%</li>
+      <li>Fortnite : 60%</li>
+    </ul>
+  </div>
+
   <!-- Bouton pour afficher le max d'FPS -->
   <button class="button" onclick="showMaxFPS()">Afficher le maximum d'FPS atteint</button>
 
   <script>
-    const slider = document.getElementById("fps-slider");
+    const lagSlider = document.getElementById("lag-slider");
     const sliderValue = document.getElementById("slider-value");
     const fpsCounter = document.getElementById("fps-counter");
 
     let lastTime = performance.now();
     let maxFPS = 0;
-    let targetFPS = parseInt(slider.value);
-    let delay = 1000 / targetFPS;
+    let lagIntensity = parseInt(lagSlider.value);
 
-    slider.addEventListener("input", () => {
-      targetFPS = parseInt(slider.value);
-      delay = 1000 / targetFPS;
-      sliderValue.textContent = targetFPS;
+    lagSlider.addEventListener("input", () => {
+      lagIntensity = parseInt(lagSlider.value);
+      sliderValue.textContent = lagIntensity;
     });
 
     function simulateHeavyComputation() {
-      // Simulation de charge CPU artificielle
+      // Simulation de lag basé sur l'intensité de la slidebar
       const start = performance.now();
-      while (performance.now() - start < 16); // Boucle pour ralentir le calcul (simule du lag)
+      while (performance.now() - start < lagIntensity); // Plus l'intensité est élevée, plus le lag augmente
     }
 
     function calculateFPS() {
       const now = performance.now();
       const delta = now - lastTime;
 
-      if (delta >= delay) {
-        // Calcul du FPS actuel
-        const fps = Math.round(1000 / delta);
+      // Calcul du FPS actuel
+      const fps = Math.round(1000 / delta);
 
-        // Stocker le max FPS mesuré
-        if (fps > maxFPS) maxFPS = fps;
-
-        // Afficher le FPS actuel
+      // Affiche seulement si le FPS est un nombre fini
+      if (Number.isFinite(fps)) {
         fpsCounter.textContent = fps;
 
-        // Mettre à jour le temps pour le prochain calcul
-        lastTime = now;
-
-        // Simuler du lag
-        simulateHeavyComputation();
+        // Vérifie si le FPS actuel est le plus haut mesuré
+        if (fps > maxFPS) {
+          maxFPS = fps;
+        }
       }
+
+      lastTime = now;
+
+      // Simuler du lag en fonction de la force sélectionnée
+      simulateHeavyComputation();
 
       // Boucle avec requestAnimationFrame pour continuer le calcul d'FPS
       requestAnimationFrame(calculateFPS);
@@ -111,6 +125,7 @@
 
     calculateFPS();
 
+    // Affichage du max FPS
     function showMaxFPS() {
       alert(`Le maximum d'FPS atteint est : ${maxFPS}`);
     }
