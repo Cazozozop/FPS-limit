@@ -3,115 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulation de Lag - Force de Lag Réglable</title>
+  <title>Simulation de Lag Intense</title>
   <style>
-    /* Réinitialisation de base */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    /* Mise en page de base */
-    body, html {
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      background-color: #1e1e2f;
-      color: #ffffff;
-      overflow: hidden;
-    }
-
-    h1 {
-      margin-bottom: 20px;
-      font-size: 2em;
-      color: #ffcc00;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    }
-
-    /* Style du conteneur de la slidebar */
-    .slider-container {
-      width: 80%;
-      max-width: 500px;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .slider {
-      -webkit-appearance: none;
-      width: 100%;
-      height: 15px;
-      border-radius: 5px;
-      background: linear-gradient(to right, #007bff 0%, #007bff 50%, #ff0000 50%, #ff0000 100%);
-      outline: none;
-      transition: background 0.3s ease;
-    }
-
-    /* Pour la transition de couleur */
-    .slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 25px;
-      height: 25px;
-      background-color: #ffffff;
-      cursor: pointer;
-      border-radius: 50%;
-      border: 2px solid #007bff;
-      transition: background 0.3s ease;
-    }
-
-    /* Compteur d'FPS */
-    .fps-counter {
-      font-size: 1.2em;
-      margin-top: 10px;
-    }
-
-    /* Texte de la force du lag */
-    #slider-value {
-      font-weight: bold;
-      color: #007bff;
-    }
-
-    /* Texte en rouge quand la force de lag dépasse 100% */
-    .red-text {
-      color: #ff0000 !important;
-    }
-
-    /* Bouton pour afficher le max FPS */
-    .button {
-      margin-top: 20px;
-      padding: 12px 24px;
-      background-color: #ffcc00;
-      color: #1e1e2f;
-      border: none;
-      font-weight: bold;
-      font-size: 1em;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .button:hover {
-      background-color: #ffc107;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html { font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; background-color: #1e1e2f; color: #ffffff; }
+    h1 { margin-bottom: 20px; font-size: 2em; color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
+    .slider-container { width: 80%; max-width: 500px; text-align: center; margin-bottom: 20px; }
+    .slider { -webkit-appearance: none; width: 100%; height: 15px; border-radius: 5px; background: linear-gradient(to right, #007bff 0%, #007bff 50%, #ff0000 50%, #ff0000 100%); outline: none; }
+    .slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 25px; height: 25px; background-color: #ffffff; cursor: pointer; border-radius: 50%; border: 2px solid #007bff; }
+    .fps-counter { font-size: 1.2em; margin-top: 10px; }
+    #slider-value { font-weight: bold; color: #007bff; }
+    .red-text { color: #ff0000 !important; }
+    .button { margin-top: 20px; padding: 12px 24px; background-color: #ffcc00; color: #1e1e2f; border: none; font-weight: bold; font-size: 1em; cursor: pointer; }
+    .button:hover { background-color: #ffc107; }
   </style>
 </head>
 <body>
 
-  <h1>Simulation de Lag - Force Réglable</h1>
-
-  <!-- Conteneur de la slidebar pour la force de lag -->
+  <h1>Simulation de Lag Intense</h1>
   <div class="slider-container">
     <input type="range" min="1" max="200" value="20" class="slider" id="lag-slider">
     <p>Force du Lag : <span id="slider-value">20</span>%</p>
   </div>
-
-  <!-- Compteur d'FPS -->
   <div class="fps-counter">FPS Actuel : <span id="fps-counter">0</span></div>
-
-  <!-- Bouton pour afficher le max FPS atteint -->
   <button class="button" onclick="showMaxFPS()">Afficher le maximum d'FPS atteint</button>
 
   <script>
@@ -126,8 +40,6 @@
     lagSlider.addEventListener("input", () => {
       lagIntensity = parseInt(lagSlider.value);
       sliderValue.textContent = lagIntensity;
-
-      // Changer la couleur du texte en rouge si la force de lag est élevée
       if (lagIntensity > 100) {
         sliderValue.classList.add("red-text");
       } else {
@@ -135,12 +47,16 @@
       }
     });
 
-    function simulateHeavyComputation() {
+    function heavyCalculation(x, y, z) {
+      // Fonction récursive pour imiter un calcul complexe
+      if (z <= 0) return Math.sin(x) * Math.cos(y) * Math.tan(x + y);
+      return heavyCalculation(x + 0.1, y + 0.1, z - 1) * Math.sqrt(x * y * z + 1) / (Math.log(z + 1) + 1);
+    }
+
+    function simulateLag() {
       let result = 0;
-      // Simulation de calcul intensif avec une série de calculs complexes
-      for (let i = 0; i < lagIntensity * 5000; i++) {
-        result += Math.sin(i) * Math.cos(i * Math.PI / 180) * Math.tan(i * Math.PI / 180) / (Math.sqrt(i + 1) + Math.log(i + 1) + Math.pow(i, 0.25));
-        result = result % 5000;
+      for (let i = 0; i < lagIntensity * 10; i++) {
+        result += heavyCalculation(i * 0.01, i * 0.01, 50);
       }
       return result;
     }
@@ -148,15 +64,10 @@
     function calculateFPS() {
       const now = performance.now();
       const delta = now - lastTime;
-
-      // Calcul du FPS actuel
       const fps = Math.round(1000 / delta);
 
-      // Affiche seulement si le FPS est un nombre fini
       if (Number.isFinite(fps)) {
         fpsCounter.textContent = fps;
-
-        // Vérifie si le FPS actuel est le plus haut mesuré
         if (fps > maxFPS) {
           maxFPS = fps;
         }
@@ -164,16 +75,12 @@
 
       lastTime = now;
 
-      // Simuler du lag intensif en fonction de la force sélectionnée
-      simulateHeavyComputation();
-
-      // Boucle avec requestAnimationFrame pour continuer le calcul d'FPS
+      simulateLag();
       requestAnimationFrame(calculateFPS);
     }
 
     calculateFPS();
 
-    // Affichage du max FPS
     function showMaxFPS() {
       alert(`Le maximum d'FPS atteint est : ${maxFPS}`);
     }
