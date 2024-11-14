@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
@@ -115,15 +115,20 @@
 
     function calculateFPS() {
       const now = performance.now();
-      const fps = Math.round(1000 / (now - lastTime));
+      const delta = now - lastTime;
       lastTime = now;
-      
-      // Met à jour l'affichage du FPS
-      document.getElementById("fps-counter").textContent = fps;
-      
-      // Vérifie si le FPS actuel est le plus haut mesuré
-      if (fps > maxFPS) {
-        maxFPS = fps;
+
+      // Calcul du FPS
+      const fps = Math.round(1000 / delta);
+
+      // Affiche seulement si le FPS est un nombre fini et dans une limite raisonnable (par ex. 240 FPS)
+      if (Number.isFinite(fps) && fps <= 240) {
+        document.getElementById("fps-counter").textContent = fps;
+
+        // Vérifie si le FPS actuel est le plus haut mesuré
+        if (fps > maxFPS) {
+          maxFPS = fps;
+        }
       }
 
       requestAnimationFrame(calculateFPS);
