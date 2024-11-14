@@ -92,9 +92,11 @@
     });
 
     function simulateHeavyComputation() {
-      // Simulation de lag basé sur l'intensité de la slidebar
-      const start = performance.now();
-      while (performance.now() - start < lagIntensity); // Plus l'intensité est élevée, plus le lag augmente
+      // Simulation de lag avec des calculs mathématiques complexes
+      let result = 0;
+      for (let i = 0; i < lagIntensity * 1000; i++) {
+        result += Math.sin(i) * Math.cos(i) / Math.sqrt(i + 1); // Calcul complexe pour alourdir le CPU
+      }
     }
 
     function calculateFPS() {
