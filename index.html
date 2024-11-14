@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Site avec Slidebar, Mode Sombre/Clair et Compteur d'FPS</title>
+  <title>Simulation de Lag avec Compteur d'FPS</title>
   <style>
     /* Styles généraux */
     body, html {
@@ -73,12 +73,12 @@
 </head>
 <body class="light-mode">
 
-  <h1>Site Web avec Slidebar et Compteur d'FPS</h1>
+  <h1>Simulation de Lag avec Compteur d'FPS</h1>
 
   <!-- Conteneur de la slidebar -->
   <div class="slider-container">
-    <input type="range" min="0" max="2000" value="0" class="slider" id="slider">
-    <p>Valeur de la slidebar : <span id="slider-value">0</span></p>
+    <input type="range" min="5" max="60" value="30" class="slider" id="slider">
+    <p>FPS minimum souhaité : <span id="slider-value">30</span></p>
   </div>
 
   <!-- Compteur d'FPS -->
@@ -112,6 +112,7 @@
     // Compteur FPS avec maximum FPS
     let lastTime = performance.now();
     let maxFPS = 0;
+    let delay = 0;
 
     function calculateFPS() {
       const now = performance.now();
@@ -121,8 +122,8 @@
       // Calcul du FPS
       const fps = Math.round(1000 / delta);
 
-      // Affiche seulement si le FPS est un nombre fini et dans une limite raisonnable (par ex. 240 FPS)
-      if (Number.isFinite(fps) && fps <= 240) {
+      // Affiche seulement si le FPS est un nombre fini et dans une limite raisonnable
+      if (Number.isFinite(fps)) {
         document.getElementById("fps-counter").textContent = fps;
 
         // Vérifie si le FPS actuel est le plus haut mesuré
@@ -131,7 +132,9 @@
         }
       }
 
-      requestAnimationFrame(calculateFPS);
+      // Attendre avant de continuer, en fonction du FPS minimum
+      delay = 1000 / parseInt(slider.value);
+      setTimeout(() => requestAnimationFrame(calculateFPS), delay);
     }
 
     calculateFPS();
