@@ -1,22 +1,132 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Épis & Performance</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Site avec Slidebar, Mode Sombre/Clair et Compteur d'FPS</title>
+  <style>
+    /* Styles généraux */
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    /* Mode clair et sombre */
+    body.light-mode {
+      background-color: #ffffff;
+      color: #000000;
+    }
+
+    body.dark-mode {
+      background-color: #121212;
+      color: #ffffff;
+    }
+
+    /* Slidebar */
+    .slider-container {
+      width: 80%;
+      margin: 20px;
+    }
+
+    .slider {
+      width: 100%;
+    }
+
+    /* Bouton pour afficher le max FPS */
+    .button {
+      margin: 20px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Compteur d'FPS */
+    .fps-counter {
+      font-size: 1.5em;
+      margin-top: 10px;
+    }
+
+    /* Bouton pour mode sombre/clair */
+    .toggle-mode {
+      margin-top: 20px;
+      padding: 10px 20px;
+      cursor: pointer;
+      background-color: #333;
+      color: #fff;
+      border: none;
+    }
+  </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Paramétrage des Épis</h1>
-        <div class="slider-container">
-            <label for="epi-slider">Nombre d'épis : <span id="epi-count">0</span></label>
-            <input type="range" id="epi-slider" min="0" max="2000" value="0" />
-        </div>
-        <button id="max-epi-btn">Épis max pour le CPU</button>
-        <div id="fps-counter">FPS: <span id="fps">0</span></div>
-        <button id="theme-toggle">Mode Sombre</button>
-    </div>
-    <script src="script.js"></script>
+<body class="light-mode">
+
+  <h1>Site Web avec Slidebar et Compteur d'FPS</h1>
+
+  <!-- Conteneur de la slidebar -->
+  <div class="slider-container">
+    <input type="range" min="0" max="2000" value="0" class="slider" id="slider">
+    <p>Valeur de la slidebar : <span id="slider-value">0</span></p>
+  </div>
+
+  <!-- Compteur d'FPS -->
+  <div class="fps-counter">FPS: <span id="fps-counter">0</span></div>
+
+  <!-- Bouton pour afficher le max d'FPS -->
+  <button class="button" onclick="showMaxFPS()">Afficher le maximum d'FPS</button>
+
+  <!-- Bouton pour mode sombre/clair -->
+  <button class="toggle-mode" onclick="toggleMode()">Activer le Mode Sombre</button>
+
+  <script>
+    // Variables pour le mode clair/sombre
+    const body = document.body;
+    const toggleButton = document.querySelector(".toggle-mode");
+
+    function toggleMode() {
+      body.classList.toggle("dark-mode");
+      body.classList.toggle("light-mode");
+      toggleButton.textContent = body.classList.contains("dark-mode") ? "Activer le Mode Clair" : "Activer le Mode Sombre";
+    }
+
+    // Mise à jour de la valeur de la slidebar
+    const slider = document.getElementById("slider");
+    const sliderValue = document.getElementById("slider-value");
+
+    slider.addEventListener("input", () => {
+      sliderValue.textContent = slider.value;
+    });
+
+    // Compteur FPS
+    let lastTime = performance.now();
+    let fps;
+
+    function calculateFPS() {
+      const now = performance.now();
+      fps = Math.round(1000 / (now - lastTime));
+      lastTime = now;
+      document.getElementById("fps-counter").textContent = fps;
+      requestAnimationFrame(calculateFPS);
+    }
+
+    calculateFPS();
+
+    // Affichage du max FPS
+    function showMaxFPS() {
+      alert(`Le maximum d'FPS calculé : ${fps}`);
+    }
+  </script>
 </body>
 </html>
