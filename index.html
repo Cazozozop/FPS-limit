@@ -18,7 +18,7 @@
       color: #ffffff;
     }
 
-    /* Slidebar */
+    /* Style du conteneur et du slider */
     .slider-container {
       width: 80%;
       margin: 20px;
@@ -26,6 +26,30 @@
 
     .slider {
       width: 100%;
+      -webkit-appearance: none;
+      height: 8px;
+      background: linear-gradient(to right, #007bff 0%, #007bff 50%, #ff0000 50%, #ff0000 100%);
+      outline: none;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background-color: #ffffff;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+
+    .slider::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background-color: #ffffff;
+      cursor: pointer;
+      border-radius: 50%;
     }
 
     /* Compteur d'FPS et de lag */
@@ -57,7 +81,7 @@
 
   <!-- Conteneur de la slidebar pour la force de lag -->
   <div class="slider-container">
-    <input type="range" min="1" max="100" value="20" class="slider" id="lag-slider">
+    <input type="range" min="1" max="200" value="20" class="slider" id="lag-slider">
     <p>Force du Lag : <span id="slider-value">20</span>%</p>
   </div>
 
@@ -92,10 +116,11 @@
     });
 
     function simulateHeavyComputation() {
-      // Simulation de lag avec des calculs mathématiques complexes
+      // Simulation de lag avec des calculs mathématiques intensifiés
       let result = 0;
-      for (let i = 0; i < lagIntensity * 1000; i++) {
-        result += Math.sin(i) * Math.cos(i) / Math.sqrt(i + 1); // Calcul complexe pour alourdir le CPU
+      for (let i = 0; i < lagIntensity * 1500; i++) {
+        result += Math.sin(i) * Math.tan(i) / Math.sqrt(i + 1);
+        result = result % 1000; // Réduit la valeur pour éviter des chiffres trop grands
       }
     }
 
