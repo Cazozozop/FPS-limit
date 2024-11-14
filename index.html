@@ -3,33 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulateur FPS</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Épis & Performance</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="light-mode">
-    <div class="mode-toggle" onclick="toggleMode()">🌞</div>
-    <h1>Simulateur FPS</h1>
-
-    <!-- Bouton pour lancer le test -->
-    <button id="run-btn" onclick="startTest()">Lancer le test</button>
-
-    <!-- Section FPS Slider -->
-    <div class="fps-container">
-        <label for="fps-slider">Réglez les FPS</label>
-        <input id="fps-slider" class="slider" type="range" min="0" max="2000" value="0" step="1">
-        <p>FPS: <span id="fps-value">0</span></p>
-    </div>
-
-    <!-- Zone de jeu -->
-    <div class="game-area">
-        <div class="game-container" id="game-container">
-            <div class="game-cube" id="game-cube"></div>
+<body>
+    <div class="container">
+        <h1>Paramétrage des Épis</h1>
+        <div class="slider-container">
+            <label for="epi-slider">Nombre d'épis : <span id="epi-count">0</span></label>
+            <input type="range" id="epi-slider" min="0" max="2000" value="0" />
         </div>
+        <button id="max-epi-btn">Épis max pour le CPU</button>
+        <div id="fps-counter">FPS: <span id="fps">0</span></div>
+        <button id="theme-toggle">Mode Sombre</button>
     </div>
-
-    <!-- Étincelles -->
-    <div id="sparks-container"></div>
-
     <script src="script.js"></script>
 </body>
 </html>
