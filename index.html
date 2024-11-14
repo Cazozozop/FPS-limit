@@ -6,7 +6,7 @@
   <title>Simulation de Lag Extrême</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body, html { font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; background-color: #1e1e2f; color: #ffffff; overflow: hidden; }
+    body, html { font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; overflow: hidden; }
     .animated-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(120deg, #1e1e2f, #ff0040, #0000ff, #1e1e2f); background-size: 300% 300%; animation: bgAnimation 15s ease infinite; z-index: -1; }
     @keyframes bgAnimation { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
     h1 { margin-bottom: 20px; font-size: 2.5em; color: #ffcc00; text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.7); animation: pulse 2s infinite alternate; }
@@ -53,32 +53,36 @@
       }
     });
 
-    function heavyCalculation(x, y, z) {
+    // Calcul mathématique complexe pour simuler le lag
+    function complexCalculation(x, y, z) {
       if (z <= 0) return Math.sin(x) * Math.cos(y) * Math.tan(x + y);
       return (
-        Math.pow(Math.E, heavyCalculation(x + 0.5, y + 0.5, z - 1)) +
+        Math.pow(Math.E, complexCalculation(x + 0.5, y + 0.5, z - 1)) +
         Math.sqrt(x * y * z + 1) / (Math.log(z + 1) + 1)
       );
     }
 
-    function tripleIntegralCalculation() {
+    function multipleCalculations() {
       let result = 0;
-      for (let i = 0; i < lagIntensity * 5; i++) {
-        for (let j = 0; j < lagIntensity * 5; j++) {
-          for (let k = 0; k < lagIntensity * 5; k++) {
-            result += heavyCalculation(i * 0.01, j * 0.01, k * 0.01);
+      // Augmenter la complexité en fonction de la barre
+      for (let i = 0; i < lagIntensity * 3; i++) {
+        for (let j = 0; j < lagIntensity * 3; j++) {
+          for (let k = 0; k < lagIntensity * 3; k++) {
+            result += complexCalculation(i * 0.01, j * 0.01, k * 0.01);
           }
         }
       }
       return result;
     }
 
+    // Simuler un calcul pour créer l'effet de lag
     function simulateLag() {
       for (let i = 0; i < lagIntensity; i++) {
-        tripleIntegralCalculation();
+        multipleCalculations();
       }
     }
 
+    // Calcul FPS
     function calculateFPS() {
       const now = performance.now();
       const delta = now - lastTime;
@@ -99,6 +103,7 @@
 
     calculateFPS();
 
+    // Afficher FPS max
     function showMaxFPS() {
       alert(`Le maximum d'FPS atteint est : ${maxFPS}`);
     }
