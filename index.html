@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
@@ -109,15 +109,23 @@
       sliderValue.textContent = slider.value;
     });
 
-    // Compteur FPS
+    // Compteur FPS avec maximum FPS
     let lastTime = performance.now();
-    let fps;
+    let maxFPS = 0;
 
     function calculateFPS() {
       const now = performance.now();
-      fps = Math.round(1000 / (now - lastTime));
+      const fps = Math.round(1000 / (now - lastTime));
       lastTime = now;
+      
+      // Met à jour l'affichage du FPS
       document.getElementById("fps-counter").textContent = fps;
+      
+      // Vérifie si le FPS actuel est le plus haut mesuré
+      if (fps > maxFPS) {
+        maxFPS = fps;
+      }
+
       requestAnimationFrame(calculateFPS);
     }
 
@@ -125,7 +133,7 @@
 
     // Affichage du max FPS
     function showMaxFPS() {
-      alert(`Le maximum d'FPS calculé : ${fps}`);
+      alert(`Le maximum d'FPS mesuré est : ${maxFPS}`);
     }
   </script>
 </body>
