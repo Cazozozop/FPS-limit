@@ -28,7 +28,7 @@
   <div class="animated-bg"></div>
   <h1>Simulation de Lag Extrême</h1>
   <div class="slider-container">
-    <input type="range" min="1" max="100" value="20" class="slider" id="lag-slider">
+    <input type="range" min="1" max="200" value="20" class="slider" id="lag-slider">
     <p>Force du Lag : <span id="slider-value">20</span>%</p>
   </div>
   <div class="fps-counter">FPS Actuel : <span id="fps-counter">0</span></div>
@@ -62,12 +62,13 @@
       );
     }
 
+    // Calculs plus complexes pour simuler un gros lag
     function multipleCalculations() {
       let result = 0;
-      // Augmenter la complexité en fonction de la barre
-      for (let i = 0; i < lagIntensity * 2; i++) {
-        for (let j = 0; j < lagIntensity * 2; j++) {
-          for (let k = 0; k < lagIntensity * 2; k++) {
+      // Ajout de calculs supplémentaires et plus complexes pour simuler un gros lag
+      for (let i = 0; i < lagIntensity * 5; i++) { // on augmente les calculs
+        for (let j = 0; j < lagIntensity * 5; j++) {
+          for (let k = 0; k < lagIntensity * 5; k++) {
             result += complexCalculation(i * 0.01, j * 0.01, k * 0.01);
           }
         }
