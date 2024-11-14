@@ -3,29 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulation de Lag avec Compteur d'FPS</title>
+  <title>Simulation de Lag Bloxd.io avec Limitation d'FPS</title>
   <style>
     /* Styles généraux */
     body, html {
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
-      transition: background-color 0.3s, color 0.3s;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
-    }
-
-    /* Mode clair et sombre */
-    body.light-mode {
-      background-color: #ffffff;
-      color: #000000;
-    }
-
-    body.dark-mode {
-      background-color: #121212;
+      background-color: #282c34;
       color: #ffffff;
     }
 
@@ -39,6 +29,12 @@
       width: 100%;
     }
 
+    /* Compteur d'FPS */
+    .fps-counter {
+      font-size: 1.5em;
+      margin-top: 10px;
+    }
+
     /* Bouton pour afficher le max FPS */
     .button {
       margin: 20px;
@@ -47,101 +43,76 @@
       color: #fff;
       border: none;
       cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    .button:hover {
-      background-color: #0056b3;
-    }
-
-    /* Compteur d'FPS */
-    .fps-counter {
-      font-size: 1.5em;
-      margin-top: 10px;
-    }
-
-    /* Bouton pour mode sombre/clair */
-    .toggle-mode {
-      margin-top: 20px;
-      padding: 10px 20px;
-      cursor: pointer;
-      background-color: #333;
-      color: #fff;
-      border: none;
     }
   </style>
 </head>
-<body class="light-mode">
+<body>
 
-  <h1>Simulation de Lag avec Compteur d'FPS</h1>
+  <h1>Simulation de Lag Bloxd.io</h1>
 
   <!-- Conteneur de la slidebar -->
   <div class="slider-container">
-    <input type="range" min="5" max="60" value="30" class="slider" id="slider">
-    <p>FPS minimum souhaité : <span id="slider-value">30</span></p>
+    <input type="range" min="10" max="60" value="30" class="slider" id="fps-slider">
+    <p>FPS Maximum souhaité : <span id="slider-value">30</span></p>
   </div>
 
   <!-- Compteur d'FPS -->
-  <div class="fps-counter">FPS: <span id="fps-counter">0</span></div>
+  <div class="fps-counter">FPS Actuel : <span id="fps-counter">0</span></div>
 
   <!-- Bouton pour afficher le max d'FPS -->
-  <button class="button" onclick="showMaxFPS()">Afficher le maximum d'FPS</button>
-
-  <!-- Bouton pour mode sombre/clair -->
-  <button class="toggle-mode" onclick="toggleMode()">Activer le Mode Sombre</button>
+  <button class="button" onclick="showMaxFPS()">Afficher le maximum d'FPS atteint</button>
 
   <script>
-    // Variables pour le mode clair/sombre
-    const body = document.body;
-    const toggleButton = document.querySelector(".toggle-mode");
-
-    function toggleMode() {
-      body.classList.toggle("dark-mode");
-      body.classList.toggle("light-mode");
-      toggleButton.textContent = body.classList.contains("dark-mode") ? "Activer le Mode Clair" : "Activer le Mode Sombre";
-    }
-
-    // Mise à jour de la valeur de la slidebar
-    const slider = document.getElementById("slider");
+    const slider = document.getElementById("fps-slider");
     const sliderValue = document.getElementById("slider-value");
+    const fpsCounter = document.getElementById("fps-counter");
 
-    slider.addEventListener("input", () => {
-      sliderValue.textContent = slider.value;
-    });
-
-    // Compteur FPS avec maximum FPS
     let lastTime = performance.now();
     let maxFPS = 0;
-    let delay = 0;
+    let targetFPS = parseInt(slider.value);
+    let delay = 1000 / targetFPS;
+
+    slider.addEventListener("input", () => {
+      targetFPS = parseInt(slider.value);
+      delay = 1000 / targetFPS;
+      sliderValue.textContent = targetFPS;
+    });
+
+    function simulateHeavyComputation() {
+      // Simulation de charge CPU artificielle
+      const start = performance.now();
+      while (performance.now() - start < 16); // Boucle pour ralentir le calcul (simule du lag)
+    }
 
     function calculateFPS() {
       const now = performance.now();
       const delta = now - lastTime;
-      lastTime = now;
 
-      // Calcul du FPS
-      const fps = Math.round(1000 / delta);
+      if (delta >= delay) {
+        // Calcul du FPS actuel
+        const fps = Math.round(1000 / delta);
 
-      // Affiche seulement si le FPS est un nombre fini et dans une limite raisonnable
-      if (Number.isFinite(fps)) {
-        document.getElementById("fps-counter").textContent = fps;
+        // Stocker le max FPS mesuré
+        if (fps > maxFPS) maxFPS = fps;
 
-        // Vérifie si le FPS actuel est le plus haut mesuré
-        if (fps > maxFPS) {
-          maxFPS = fps;
-        }
+        // Afficher le FPS actuel
+        fpsCounter.textContent = fps;
+
+        // Mettre à jour le temps pour le prochain calcul
+        lastTime = now;
+
+        // Simuler du lag
+        simulateHeavyComputation();
       }
 
-      // Attendre avant de continuer, en fonction du FPS minimum
-      delay = 1000 / parseInt(slider.value);
-      setTimeout(() => requestAnimationFrame(calculateFPS), delay);
+      // Boucle avec requestAnimationFrame pour continuer le calcul d'FPS
+      requestAnimationFrame(calculateFPS);
     }
 
     calculateFPS();
 
-    // Affichage du max FPS
     function showMaxFPS() {
-      alert(`Le maximum d'FPS mesuré est : ${maxFPS}`);
+      alert(`Le maximum d'FPS atteint est : ${maxFPS}`);
     }
   </script>
 </body>
